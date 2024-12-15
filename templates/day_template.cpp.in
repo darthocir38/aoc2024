@@ -1,0 +1,19 @@
+#include "day@DAY@.h"
+
+namespace adventofcode
+{
+Day@DAY@::Day@DAY@() : DaySolver(@DAY@) {
+    // Data for tests
+    test_data = R"()";
+    test_results = { 0, 0 };
+}
+
+long Day@DAY@::solvePart1() {
+    return 0;
+}
+
+long Day@DAY@::solvePart2() {
+    return 0;
+}
+
+}

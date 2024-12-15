@@ -1,0 +1,10 @@
+#pragma once
+#include <string_view>
+#include <array>
+
+namespace adventofcode
+{
+inline constexpr std::array<std::string_view, 25> inputs = {
+@INPUTS_CONTENT@
+};
+}

@@ -1,0 +1,14 @@
+.cache
+.idea
+.vscode
+.session
+*.DS_Store
+compile_commands.json
+
+build*
+cmake-build-debug
+cmake-build-release
+
+inputs/*
+src/inputs.h
+src/cli/SolverFactory.h

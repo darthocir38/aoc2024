@@ -1,0 +1,65 @@
+# Day 1 running...
+- Part 1
+  -> Result: 1970720 (in 1182 µs)
+- Part 2
+  -> Result: 17191599 (in 1335 µs)
+# Day 2 running...
+- Part 1
+  -> Result: 279 (in 1543 µs)
+- Part 2
+  -> Result: 343 (in 1409 µs)
+# Day 3 running...
+- Part 1
+  -> Result: 174960292 (in 894 µs)
+- Part 2
+  -> Result: 56275602 (in 1200 µs)
+# Day 4 running...
+- Part 1
+  -> Result: 2557 (in 8777 µs)
+- Part 2
+  -> Result: 1854 (in 276 µs)
+# Day 5 running...
+- Part 1
+  -> Result: 4689 (in 804 µs)
+- Part 2
+  -> Result: 6336 (in 2125 µs)
+# Day 6 running...
+- Part 1
+  -> Result: 4903 (in 2186 µs)
+- Part 2
+  -> Result: 1911 (in 1394907 µs)
+# Day 7 running...
+- Part 1
+  -> Result: 1298103531759 (in 861 µs)
+- Part 2
+  -> Result: 140575048428831 (in 198359 µs)
+# Day 8 running...
+- Part 1
+  -> Result: 269 (in 54 µs)
+- Part 2
+  -> Result: 949 (in 215 µs)
+# Day 9 running...
+- Part 1
+  -> Result: 6519155389266 (in 533 µs)
+- Part 2
+  -> Result: 6547228115826 (in 18470 µs)
+# Day 10 running...
+- Part 1
+  -> Result: 776 (in 340 µs)
+- Part 2
+  -> Result: 1657 (in 116 µs)
+# Day 11 running...
+- Part 1
+  -> Result: 199986 (in 830 µs)
+- Part 2
+  -> Result: 236804088748754 (in 48336 µs)
+# Day 12 running...
+- Part 1
+  -> Result: 1415378 (in 5215 µs)
+- Part 2
+  -> Result: 862714 (in 5753 µs)
+# Day 13 running...
+- Part 1
+  -> Result: 29023 (in 319 µs)
+- Part 2
+  -> Result: 96787395375634 (in 271 µs)
