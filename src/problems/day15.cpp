@@ -214,6 +214,7 @@ long Day15::solvePart2() {
     map = scale(map);
 
     do_solve(map, movements);
+    print(map);
     long result = 0;
     for (auto y = 0; y < map.size(); ++y)
         for (auto x = 0; x < map[y].size(); ++x)
