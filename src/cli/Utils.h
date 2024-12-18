@@ -10,10 +10,6 @@
 
 namespace adventofcode::cli::utils
 {
-inline std::string to_str(ResultType const& result) {
-    return "";
-}
-
 
 inline std::optional<int> parseNumber(std::string_view str) {
     std::optional<int> number;

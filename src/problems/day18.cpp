@@ -36,7 +36,7 @@ Day18::Day18() : DaySolver(18) {
 0,5
 1,6
 2,0)";
-    test_results = { 22, 0 };
+    test_results = { 22, "6,1" };
 }
 
 enum class DIR { UP, RIGHT, DOWN, LEFT };
@@ -176,11 +176,11 @@ ResultType Day18::solvePart2() {
         const auto path = find_path(maze, start, end);
         if (path.empty()) {
             std::println("Output: {}", l);
-            break;
+            return l;
         }
     }
 
-    return 0;
+    return "";
 }
 
 } // namespace adventofcode

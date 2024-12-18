@@ -10,8 +10,8 @@ Unit tests are already setup for the 25 days of the advent calendar, and can be 
 
 ## Requirements
 
-- CMake > 3.20
-- C++20 compiler
+- CMake
+- C++17 compiler
 
 ## Usage
 
@@ -31,6 +31,12 @@ To generate a new day, run the following command:
 cmake -D DAY=1 -P generate_day.cmake
 ```
 
+Or generate multiple days at a time 
+
+```bash
+cmake -D DAYS=1,2,3 -P generate_day.cmake
+```
+
 This will take care of reading your input for the day, put it in a text file, and generate the sources for the day. 
 
 The source files are put in the `src/problems` directory, and the input files in the `inputs` directory. You can access the input from the class using the `input_data` member.
@@ -46,16 +52,19 @@ namespace adventofcode
         test_results = { 0, 0 };
     }
 
-    long Day1::solve(Part part) {
+    long Day1::solvePart1() {
         return 0;
     }
 
+    long Day1::solvePart2() {
+        return 0;
+    }
 }
 ```
 
-Just fill out the `solve` method of the day class, it should return a value for each part of the day.
+Just fill out the `solvePartN` methods of the day class, they should return the result for each part of the day.
 
-You can also fill the constructor of the day class with the test data and the expected results for each part. It will be used by unit tests to validate your solution.
+You can also fill the constructor of the day class with the test data and the expected results for each part. It will be used by unit tests to validate your solution. An optional member test_data2 is available for the second part of the day if required.
 
 Any change to the file structure will be picked up by CMake and re-trigger a configure so everything is up to date.
 
