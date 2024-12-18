@@ -168,11 +168,16 @@ ResultType Day18::solvePart2() {
 
     std::vector<std::string> maze(grid.second + 1, std::string(grid.first + 1, '.'));
 
+    Path last_path;
+    int cnt = 0;
     for (auto const& l : content) {
         auto vec = convert<int>(split(l, ','));
         maze[vec[1]][vec[0]] = '#';
         //print(maze);
+        cnt++;
+        if (cnt < nano_sec) {continue;}
 
+        if (contains(last_path, {vec[1], vec[0]})) { continue;}
         const auto path = find_path(maze, start, end);
         if (path.empty()) {
             std::println("Output: {}", l);
