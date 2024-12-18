@@ -49,48 +49,51 @@ void add_to (auto const& data, auto& checked, Crop& c, Point p) {
     };
 
 Field buildField(auto const& data) {
-    Field field;
-    field.x = data[0].size();
-    field.y = data.size();
-    std::vector<std::vector<bool>> checked(field.y, std::vector<bool>(field.x, false));
+        Field field;
+        field.x = data[0].size();
+        field.y = data.size();
+        std::vector<std::vector<bool>> checked(field.y, std::vector<bool>(field.x, false));
 
-
-    for (auto y = 0; y < data.size(); y++) {
-        for (auto x = 0; x < data[y].size(); x++) {
-            if (checked[y][x]) {continue;}
-            Crop  c = {data[y][x]};
-            checked[y][x] = true;
-            Point p = {x,y};
-            c.area.push_back({ x, y });
-            for (auto n : neighbors) {
-                add_to(data, checked,c,p+n);
-            }
-            field.crops.push_back(c);
-        }
-    }
-    return field;
-}
-
-long Day12::solvePart1() {
-	const auto content    =split(input_data, '\n');
-    Field field = buildField(content);
-
-    int result = 0;
-    for (auto const& crop : field.crops) {
-        auto const& area = crop.area.size();
-        int perimeter = 0;
-        for (auto p : crop.area) {
-            for (auto n : neighbors) {
-                auto pn = p+n;
-                if (not contains(crop.area, pn)) {perimeter++;}
+        for (auto y = 0; y < data.size(); y++) {
+            for (auto x = 0; x < data[y].size(); x++) {
+                if (checked[y][x]) {
+                    continue;
+                }
+                Crop c = { data[y][x] };
+                checked[y][x] = true;
+                Point p = { x, y };
+                c.area.push_back({ x, y });
+                for (auto n : neighbors) {
+                    add_to(data, checked, c, p + n);
+                }
+                field.crops.push_back(c);
             }
         }
-        result += area*perimeter;
+        return field;
     }
-    return result;
-}
 
-long Day12::solvePart2() {
+    ResultType Day12::solvePart1() {
+        const auto content = split(input_data, '\n');
+        Field field = buildField(content);
+
+        int result = 0;
+        for (auto const& crop : field.crops) {
+            auto const& area = crop.area.size();
+            int perimeter = 0;
+            for (auto p : crop.area) {
+                for (auto n : neighbors) {
+                    auto pn = p + n;
+                    if (not contains(crop.area, pn)) {
+                        perimeter++;
+                    }
+                }
+            }
+            result += area * perimeter;
+        }
+        return result;
+    }
+
+    ResultType Day12::solvePart2() {
 	const auto content    =split(input_data, '\n');
     Field field = buildField(content);
 

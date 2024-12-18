@@ -62,38 +62,36 @@ auto build_machines(auto const& data) {
     static const std::regex p1("X[+=]([0-9]*), Y[+=]([0-9]*)");
 
     std::vector<machine> machines;
-    for(auto i = 0;i < data.size(); i=i+3) {
+    for (auto i = 0; i < data.size(); i = i + 3) {
         auto const& a = data[i];
-        auto const& b = data[i+1];
-        auto const& p = data[i+2];
+        auto const& b = data[i + 1];
+        auto const& p = data[i + 2];
         std::smatch match;
         std::regex_search(a, match, p1);
-        P but_a (stoi(match[1]),stoi(match[2]));
+        P but_a(stoi(match[1]), stoi(match[2]));
         std::regex_search(b, match, p1);
-        P but_b (stoi(match[1]),stoi(match[2]));
+        P but_b(stoi(match[1]), stoi(match[2]));
         std::regex_search(p, match, p1);
-        P prize (stoi(match[1]),stoi(match[2]));
-        machines.emplace_back(but_a,but_b,prize);
+        P prize(stoi(match[1]), stoi(match[2]));
+        machines.emplace_back(but_a, but_b, prize);
     }
     return machines;
 }
 
-
-
-long Day13::solvePart1() {
-	const auto content    =split(input_data, '\n');
-    auto machines= build_machines(content);
+ResultType Day13::solvePart1() {
+    const auto content = split(input_data, '\n');
+    auto machines = build_machines(content);
 
     auto result = 0;
     for (auto& m : machines) {
-        if (auto res = solve(m,0)) {
-            result += 3*(res->first) + res->second;
+        if (auto res = solve(m, 0)) {
+            result += 3 * (res->first) + res->second;
         }
     }
     return result;
 }
 
-long Day13::solvePart2() {
+ResultType Day13::solvePart2() {
 	const auto content    =split(input_data, '\n');
     auto machines= build_machines(content);
     long result = 0;

@@ -46,51 +46,46 @@ std::vector<Point> find_paths(auto const& heights, Point const& curr)
 }
 
 
-int find_paths_p2(auto const& heights, Point const& curr)
-{
-	auto height = heights[curr.y][curr.x];
-	if (height == 9)
-	{
-		return 1;
-	}
+int find_paths_p2(auto const& heights, Point const& curr) {
+    auto height = heights[curr.y][curr.x];
+    if (height == 9) {
+        return 1;
+    }
 
-	int found =0;
-	for (auto n : neighbors)
-	{
-		auto next_p = curr + n;
-		if (not next_p.in_range(heights[0].size()-1, heights.size()-1)) continue;
-		auto nheight = heights[next_p.y][next_p.x];
-		if (nheight == height+1)
-		{
-			found += find_paths_p2(heights, next_p);
-		}
-	}
+    int found = 0;
+    for (auto n : neighbors) {
+        auto next_p = curr + n;
+        if (not next_p.in_range(heights[0].size() - 1, heights.size() - 1))
+            continue;
+        auto nheight = heights[next_p.y][next_p.x];
+        if (nheight == height + 1) {
+            found += find_paths_p2(heights, next_p);
+        }
+    }
 
-	return found;
+    return found;
 }
 
-long Day10::solvePart1() {
-	const auto content    =split(input_data, '\n');
-	auto heights = split_by_char<int>(content);
+ResultType Day10::solvePart1() {
+    const auto content = split(input_data, '\n');
+    auto heights = split_by_char<int>(content);
 
     int result = 0;
-	for (auto y = 0; y < heights.size(); y++)
-		for (auto x = 0; x < heights[y].size(); x++)
-		{
-			auto height = heights[y][x];
-			if (height == 0)
-			{
-				auto start = Point(x, y);
-				auto paths = find_paths(heights, start);
-				//std::println("start at {},{} -> {}", x,y, paths.size());
-				result += paths.size();
-			}
-		}
+    for (auto y = 0; y < heights.size(); y++)
+        for (auto x = 0; x < heights[y].size(); x++) {
+            auto height = heights[y][x];
+            if (height == 0) {
+                auto start = Point(x, y);
+                auto paths = find_paths(heights, start);
+                // std::println("start at {},{} -> {}", x,y, paths.size());
+                result += paths.size();
+            }
+        }
 
     return result;
 }
 
-long Day10::solvePart2() {
+ResultType Day10::solvePart2() {
 	const auto content    =split(input_data, '\n');
 	auto heights = split_by_char<int>(content);
 

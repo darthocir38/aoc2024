@@ -10,22 +10,23 @@ Day3::Day3() : DaySolver(3) {
     test_results = { 161, 48 };
 }
 
-long Day3::solvePart1() {
-	const auto content    =split(input_data, '\n');
-	int                     sum = 0;
-	static const std::regex p1("mul\\(([0-9]{1,3})" "," "([0-9]{1,3})\\)");
+ResultType Day3::solvePart1() {
+    const auto content = split(input_data, '\n');
+    int sum = 0;
+    static const std::regex p1("mul\\(([0-9]{1,3})"
+                               ","
+                               "([0-9]{1,3})\\)");
 
-	for (auto str : content) {
-	    for (std::smatch sm; regex_search(str, sm, p1);)
-	    {
-	        sum += stoi(sm[1].str()) * stoi(sm[2].str());
-	        str = sm.suffix();
-	    }
-	}
+    for (auto str : content) {
+        for (std::smatch sm; regex_search(str, sm, p1);) {
+            sum += stoi(sm[1].str()) * stoi(sm[2].str());
+            str = sm.suffix();
+        }
+    }
     return sum;
 }
 
-long Day3::solvePart2() {
+ResultType Day3::solvePart2() {
 	const auto content    =split(input_data, '\n');
 	static const std::regex p2(
 		"(do\\(\\)|don't\\(\\))|mul\\(([0-9]{1,3}),([0-9]{1,3})\\)");

@@ -13,74 +13,66 @@ Day9::Day9() : DaySolver(9) {
 static int id_cnt = 0;
 struct space
 {
-	int id;
-	size_t size;
+    int id;
+    size_t size;
 };
 
-long Day9::solvePart1() {
-	const auto content    =split(input_data, '\n');
+ResultType Day9::solvePart1() {
+    const auto content = split(input_data, '\n');
 
     id_cnt = 0;
     std::vector<space> fs;
-	std::vector<space> fs_new;
-	bool last_was_free = true;
-	for (auto const& c : content[0])
-	{
-			fs.emplace_back(last_was_free?id_cnt++:-1, convert<size_t>(std::string{c}));
-			last_was_free = !last_was_free;
-	}
-	auto fwd = 0;
-	auto bwd = fs.size()-1;
+    std::vector<space> fs_new;
+    bool last_was_free = true;
+    for (auto const& c : content[0]) {
+        fs.emplace_back(last_was_free ? id_cnt++ : -1, convert<size_t>(std::string { c }));
+        last_was_free = !last_was_free;
+    }
+    auto fwd = 0;
+    auto bwd = fs.size() - 1;
 
-	while ( fwd <= bwd )
-	{
-		auto& v_fwd = fs[fwd];
-		auto& v_bwd = fs[bwd];
+    while (fwd <= bwd) {
+        auto& v_fwd = fs[fwd];
+        auto& v_bwd = fs[bwd];
 
-		if (v_fwd.id != -1)
-		{
-			fs_new.emplace_back(v_fwd);
-			fwd++;
-		}
-		else
-		{
-			if (v_bwd.id == -1)
-			{bwd--;}
-			else
-			{
-				auto& free_space = v_fwd.size;
-				auto& avail_file = v_bwd.size;
+        if (v_fwd.id != -1) {
+            fs_new.emplace_back(v_fwd);
+            fwd++;
+        } else {
+            if (v_bwd.id == -1) {
+                bwd--;
+            } else {
+                auto& free_space = v_fwd.size;
+                auto& avail_file = v_bwd.size;
 
-				auto file_new = space(v_bwd.id, 0);
-				while (free_space > 0 and avail_file > 0)
-				{
-					file_new.size++;
-					free_space--;
-					avail_file--;
-				}
-				fs_new.emplace_back(file_new);
-				if (free_space == 0) fwd++;
-				if (avail_file == 0) bwd--;
+                auto file_new = space(v_bwd.id, 0);
+                while (free_space > 0 and avail_file > 0) {
+                    file_new.size++;
+                    free_space--;
+                    avail_file--;
+                }
+                fs_new.emplace_back(file_new);
+                if (free_space == 0)
+                    fwd++;
+                if (avail_file == 0)
+                    bwd--;
+            }
+        }
+    }
 
-			}
-		}
-	}
-
-	long result = 0;
-	long idx = 0;
-	for (auto const& c : fs_new)
-	{
-		for (auto i = 0u; i < c.size; i++)
-		{
-			//std::println("test: {}", idx*c.id);
-			result += idx * c.id;
-			idx++;
-		}
-	}
+    long result = 0;
+    long idx = 0;
+    for (auto const& c : fs_new) {
+        for (auto i = 0u; i < c.size; i++) {
+            // std::println("test: {}", idx*c.id);
+            result += idx * c.id;
+            idx++;
+        }
+    }
     return result;
 }
 
-long Day9::solvePart2() {
+ResultType Day9::solvePart2() {
 	const auto content    =split(input_data, '\n');
     id_cnt = 0;
 	std::vector<space> fs;

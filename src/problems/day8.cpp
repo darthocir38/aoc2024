@@ -24,58 +24,53 @@ Day8::Day8() : DaySolver(8) {
     test_results = { 14, 34 };
 }
 
-long Day8::solvePart1() {
-	const auto content    =split(input_data, '\n');
-	int x_max = content[0].size()-1;
-	int y_max = content.size()-1;
+ResultType Day8::solvePart1() {
+    const auto content = split(input_data, '\n');
+    int x_max = content[0].size() - 1;
+    int y_max = content.size() - 1;
 
-	std::map<char, std::vector<Point> > antennas;
+    std::map<char, std::vector<Point>> antennas;
 
-	auto add_point = [&](auto & vec, auto const& point) {
-		if (not point.in_range(x_max,y_max))
-		{
-			return;
-		}
-		if (not contains (vec, point))
-		{
-			vec.push_back(point);
-		}
-	};
-	auto build_notes_p1=[&](auto const& locations, auto& nodes) {
-		for (auto i = 0, n = locations.size(); i < n-1; i++)
-			for (auto j = i + 1; j < n; j++)
-			{
-				auto p1 = locations[i];
-				auto p2 = locations[j];
+    auto add_point = [&](auto& vec, auto const& point) {
+        if (not point.in_range(x_max, y_max)) {
+            return;
+        }
+        if (not contains(vec, point)) {
+            vec.push_back(point);
+        }
+    };
+    auto build_notes_p1 = [&](auto const& locations, auto& nodes) {
+        for (auto i = 0, n = locations.size(); i < n - 1; i++)
+            for (auto j = i + 1; j < n; j++) {
+                auto p1 = locations[i];
+                auto p2 = locations[j];
 
-				Point diff = p1 - p2;
-				Point n1 = p1 + diff;
-				add_point(nodes,n1);
+                Point diff = p1 - p2;
+                Point n1 = p1 + diff;
+                add_point(nodes, n1);
 
-				Point n2 = p2-diff;
-				add_point(nodes,n2);
-			}
-	};
-	for (auto y = 0; y < content.size(); y++)
-	{
-		for (auto x = 0; x < content[y].size(); x++)
-		{
-			auto sym = content[y][x];
-			if (sym == '.') { continue; }
-			antennas[sym].push_back({x, y});
+                Point n2 = p2 - diff;
+                add_point(nodes, n2);
+            }
+    };
+    for (auto y = 0; y < content.size(); y++) {
+        for (auto x = 0; x < content[y].size(); x++) {
+            auto sym = content[y][x];
+            if (sym == '.') {
+                continue;
+            }
+            antennas[sym].push_back({ x, y });
+        }
+    }
 
-		}
-	}
-
-	std::vector<Point> antinodes_p1,  antinodes_p2;
-	for (auto val : antennas | std::views::values)
-	{
-		build_notes_p1(val,antinodes_p1);
-	}
+    std::vector<Point> antinodes_p1, antinodes_p2;
+    for (auto val : antennas | std::views::values) {
+        build_notes_p1(val, antinodes_p1);
+    }
     return antinodes_p1.size();
 }
 
-long Day8::solvePart2() {
+ResultType Day8::solvePart2() {
 	const auto content    =split(input_data, '\n');
 	int x_max = content[0].size()-1;
 	int y_max = content.size()-1;

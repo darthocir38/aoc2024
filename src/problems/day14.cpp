@@ -70,7 +70,7 @@ std::vector<Robot> read_pos(auto content) {
     return robots;
 }
 
-long Day14::solvePart1() {
+ResultType Day14::solvePart1() {
     const auto content = split(input_data, '\n');
     const std::pair<int, int> grid = (content.size() == 12) ? std::make_pair(11, 7) : std::make_pair(101, 103);
 
@@ -109,7 +109,7 @@ long Day14::solvePart1() {
     return q[0] * q[1] * q[2] * q[3];
 }
 
-long Day14::solvePart2() {
+ResultType Day14::solvePart2() {
 
     const auto content = split(input_data, '\n');
     const std::pair<int, int> grid = (content.size() == 12) ? std::make_pair(11, 7) : std::make_pair(101, 103);

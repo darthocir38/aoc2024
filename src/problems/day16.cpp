@@ -175,8 +175,8 @@ auto solve(auto const& input_data) {
     return std::make_pair(values[se.second], best_paths.size()); // score;
 }
 
-long Day16::solvePart1() { return solve(input_data).first; }
+ResultType Day16::solvePart1() { return solve(input_data).first; }
 
-long Day16::solvePart2() { return solve(input_data).second; }
+ResultType Day16::solvePart2() { return solve(input_data).second; }
 
 } // namespace adventofcode

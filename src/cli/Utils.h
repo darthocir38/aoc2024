@@ -6,9 +6,14 @@
 #include <optional>
 #include <string>
 #include <string_view>
+#include "Result.h"
 
 namespace adventofcode::cli::utils
 {
+inline std::string to_str(ResultType const& result) {
+    return "";
+}
+
 
 inline std::optional<int> parseNumber(std::string_view str) {
     std::optional<int> number;
@@ -80,7 +85,7 @@ inline void solveDay(int day, std::optional<Part> part) {
     auto solve_part = [&](Part p) {
         std::cout << "- Part " << (p == Part::Part1 ? "1" : "2") << " : ";
         const auto [result, duration] = solver->timed_solve(p);
-        std::cout << "  -> Result: " << result << " (in " << duration << " µs)\n";
+        std::cout << "  -> Result: " << streamer{result} << " (in " << duration << " µs)\n";
     };
 
     std::cout << "# Day " << day << "\n";

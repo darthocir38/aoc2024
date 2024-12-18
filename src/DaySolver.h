@@ -9,10 +9,11 @@ namespace adventofcode
 {
 
 enum class Part { Part1, Part2 };
+using ResultType = std::variant<long, size_t, std::string>;
 
 struct DayResult
 {
-    long result = 0;
+    ResultType result;
     long duration = 0;
 };
 
@@ -23,8 +24,8 @@ public:
     explicit DaySolver(int inDay) : input_data(inputs[inDay - 1]) {}
     virtual ~DaySolver() = default;
 
-    virtual long solvePart1() = 0;
-    virtual long solvePart2() = 0;
+    virtual ResultType solvePart1() = 0;
+    virtual ResultType solvePart2() = 0;
 
     DayResult timed_solve(Part part) {
         const auto start = std::chrono::high_resolution_clock::now();
@@ -35,12 +36,13 @@ public:
 
     void setup_test() { input_data = test_data; }
 
-    [[nodiscard]] long get_test_result(Part part) const { return test_results[static_cast<size_t>(part)]; }
+    [[nodiscard]] ResultType get_test_result(Part part) const { return test_results[static_cast<size_t>(part)]; }
 
 protected:
     std::string_view input_data;
 
     std::string test_data;
-    std::array<long, 2> test_results {};
+    std::array<ResultType, 2> test_results {};
 };
 } // namespace adventofcode
+

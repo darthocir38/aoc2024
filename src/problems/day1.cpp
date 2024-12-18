@@ -19,26 +19,25 @@ Day1::Day1() : DaySolver(1) {
     test_results = { 11, 31 };
 }
 
-long Day1::solvePart1() {
+ResultType Day1::solvePart1() {
 
+    const auto lines = split(input_data, '\n');
+    const auto cols = by_column(split(lines, ' '));
 
-	const auto lines    =split(input_data, '\n');
-    const auto cols      = by_column(split(lines, ' '));
+    auto cols_int = convert<int>(cols);
 
-	auto cols_int = convert<int>(cols);
+    for (auto& col : cols_int) {
+        std::ranges::sort(col);
+    }
 
-	for (auto& col : cols_int) { std::ranges::sort(col); }
-
-	int distance = 0;
-	for (std::tuple<int&, int&> elem :
-	     std::views::zip(cols_int[0], cols_int[1]))
-	{
-		distance += std::abs(std::get<1>(elem) - std::get<0>(elem));
-	}
+    int distance = 0;
+    for (std::tuple<int&, int&> elem : std::views::zip(cols_int[0], cols_int[1])) {
+        distance += std::abs(std::get<1>(elem) - std::get<0>(elem));
+    }
     return distance;
 }
 
-long Day1::solvePart2() {
+ResultType Day1::solvePart2() {
 	const auto lines    =split(input_data, '\n');
     const auto cols      = by_column(split(lines, ' '));
 

@@ -131,7 +131,7 @@ Path find_path(auto const& maze, Point const& start, Point const& end) {
     return best_paths;
 }
 
-long Day18::solvePart1() {
+ResultType Day18::solvePart1() {
     const auto content = split(input_data, '\n');
 
     std::pair<int, int> grid = content.size() < 100 ? std::make_pair(6, 6) : std::make_pair(70, 70);
@@ -151,14 +151,14 @@ long Day18::solvePart1() {
         }
         cnt++;
     }
-    //print(maze);
+    // print(maze);
 
     const auto path = find_path(maze, start, end);
 
-    return path.size() - 1;
+    return (long)path.size() - 1;
 }
 
-long Day18::solvePart2() {
+ResultType Day18::solvePart2() {
     const auto content = split(input_data, '\n');
     std::pair<int, int> grid = content.size() < 100 ? std::make_pair(6, 6) : std::make_pair(70, 70);
     int nano_sec = content.size() < 100 ? 12 : 1024;

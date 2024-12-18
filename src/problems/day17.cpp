@@ -68,8 +68,8 @@ struct CPU
     }
 
     void step() {
-        //std::println("ptr: {}, opcode: {}, operand: {}, op-value-dec: ", instr_ptr, program.at(instr_ptr),
-                     //program.at(instr_ptr + 1));
+        // std::println("ptr: {}, opcode: {}, operand: {}, op-value-dec: ", instr_ptr, program.at(instr_ptr),
+        // program.at(instr_ptr + 1));
         switch (program[instr_ptr]) {
         case 0:
             // adv div
@@ -128,99 +128,52 @@ struct CPU
     std::vector<uint> output;
 };
 
-long Day17::solvePart1() {
+ResultType Day17::solvePart1() {
     const auto content = split(input_data, '\n');
     CPU cpu(content);
 
     while (cpu.running) {
-            cpu.step();
+        cpu.step();
     }
-    for (const auto& v : cpu.output) {
-            std::print("{},", v);
-    }
-    std::println();
-    return 0;
+
+    return to_str(cpu.output);
 }
 
-bool cmpVectors(std::vector<uint> a, std::vector<uint> b)
-{
+bool cmpVectors(std::vector<uint> a, std::vector<uint> b) {
     int offset = b.size() - a.size();
-    for(int i = 0; i < a.size(); i++)
-    {
-        if(a[i] != b[i + offset])
+    for (int i = 0; i < a.size(); i++) {
+        if (a[i] != b[i + offset])
             return false;
     }
 
     return true;
 }
 
-
-uint64_t recur(CPU const& c, int64_t testValue) {
-    uint64_t r = 0;
-
-        std::print("a: {:o} | ", testValue);
-    for(int i = 0; i < 8; i++)
-    {
-        CPU c2(c);
-        c2.a = testValue + i;
-        while (c2.running) {
-            c2.step();
-        }
-
-        if(cmpVectors(c2.output, c.program ))
-        {
-            if(c2.output.size() == c.program.size())
-                return testValue + i;
-            else
-            {
-                r = recur(c, (testValue + i) * 8);
-                if(r)
-                    return r;
-            }
-        }
-    }
-}
-
-
-long Day17::solvePart2() {
+ResultType Day17::solvePart2() {
     const auto content = split(input_data, '\n');
     CPU cpu(content);
-
-
-
 
     uint64_t my_a = 0;
     bool cont = true;
     do {
-       std::print("old  a: {:o} | ", my_a);
         auto cpu2 = cpu;
         cpu2.a = my_a;
         while (cpu2.running) {
             cpu2.step();
         }
-        for (const auto& v : cpu2.output) {
-            std::print("{},", v);
+
+        if (cpu2.output == cpu.program) {
+            cont = false;
+        } else {
+            if (cmpVectors(cpu2.output, cpu.program)) {
+                my_a = my_a * 8;
+            } else {
+                my_a++;
+            }
         }
-        std::println();
+    } while (cont);
 
-       if (cpu2.output == cpu.program) { cont = false;}
-                else {
-                    if (cmpVectors(cpu2.output, cpu.program )) {
-                        my_a = my_a *8;
-                    }
-                    else {
-                        my_a++;
-                    }
-                }
-            std::println("a:{}", my_a);
-           } while (cont);
-
-
-    std::print("Output: {}", my_a);
-
-
-    //return recur(cpu, 0);
-    return 0;
+    return my_a;
 }
 
 } // namespace adventofcode

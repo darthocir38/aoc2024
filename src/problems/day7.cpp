@@ -33,48 +33,45 @@ bool is_possible_p1(unsigned long  result, unsigned long curr, auto idx, auto co
 	return false;
 }
 
-bool is_possible_p2(unsigned long  result, unsigned long curr, auto idx, auto const& inputs)
-{
-	if (idx == inputs.size())
-	{
-		return curr == result;
-	}
+bool is_possible_p2(unsigned long result, unsigned long curr, auto idx, auto const& inputs) {
+    if (idx == inputs.size()) {
+        return curr == result;
+    }
 
-	auto i = inputs[idx];
+    auto i = inputs[idx];
 
-	if (auto next = curr + i; next <= result and is_possible_p2(result, next,idx+1, inputs )) return true;
-	if (auto next = curr * i; next <= result and is_possible_p2(result, next, idx+1, inputs )) return true;
+    if (auto next = curr + i; next <= result and is_possible_p2(result, next, idx + 1, inputs))
+        return true;
+    if (auto next = curr * i; next <= result and is_possible_p2(result, next, idx + 1, inputs))
+        return true;
 
-	auto combine = [](auto const& a, auto const& b) {
-		return stoul(std::format("{}{}", a, b));
-	};
+    auto combine = [](auto const& a, auto const& b) { return stoul(std::format("{}{}", a, b)); };
 
-	if (auto next = combine(curr,i); next <= result and is_possible_p2(result, next, idx+1, inputs )) return true;
+    if (auto next = combine(curr, i); next <= result and is_possible_p2(result, next, idx + 1, inputs))
+        return true;
 
-	return false;
+    return false;
 }
 
-long Day7::solvePart1() {
-	const auto content    =split(input_data, '\n');
-	auto content_split = split(content, ':');
+ResultType Day7::solvePart1() {
+    const auto content = split(input_data, '\n');
+    auto content_split = split(content, ':');
 
-	unsigned long sum_p1 = 0;
-	int line = 0;
-	for (auto const& eq : content_split)
-	{
-		line++;
-		const auto result = convert<long>(eq[0]);
-		auto input = convert<int>(split(eq[1], ' '));
+    unsigned long sum_p1 = 0;
+    int line = 0;
+    for (auto const& eq : content_split) {
+        line++;
+        const auto result = convert<long>(eq[0]);
+        auto input = convert<int>(split(eq[1], ' '));
 
-		if (is_possible_p1(result, input[0], 1, input))
-		{
-			sum_p1  +=  result;
-		}
-	}
+        if (is_possible_p1(result, input[0], 1, input)) {
+            sum_p1 += result;
+        }
+    }
     return sum_p1;
 }
 
-long Day7::solvePart2() {
+ResultType Day7::solvePart2() {
 	const auto content    =split(input_data, '\n');
 	auto content_split = split(content, ':');
 

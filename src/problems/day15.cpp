@@ -166,36 +166,38 @@ void move_r(auto &map, Point &r, DIR d) {
 
 void do_solve(auto& map, auto const& movements) {
     Point r = get_robot(map);
-    //std::print("robot: {},{}", r.x, r.y);
+    // std::print("robot: {},{}", r.x, r.y);
 
     for (auto d : movements) {
-        //print(map);
+        // print(map);
         auto dir = to_dir(d);
         std::map<Point, char> boxes;
-        if (get_sym(r+offset_coord(dir), map) == '#') continue;
+        if (get_sym(r + offset_coord(dir), map) == '#')
+            continue;
 
-        get_connected_boxes(r+offset_coord(dir), dir, boxes, map);
+        get_connected_boxes(r + offset_coord(dir), dir, boxes, map);
         if (boxes.empty()) {
             move_r(map, r, dir);
-            //print(map);
+            // print(map);
             continue;
         }
 
-        if (std::ranges::any_of(boxes, [&](auto const& box) {return get_sym(box.first+offset_coord(dir), map) == '#';})) continue;
+        if (std::ranges::any_of(boxes, [&](auto const& box) { return get_sym(box.first + offset_coord(dir), map) == '#'; }))
+            continue;
 
         for (auto const& box : boxes) {
             map[box.first.y][box.first.x] = '.';
         }
         for (auto const& box : boxes) {
-            auto new_box = box.first +offset_coord(dir);
+            auto new_box = box.first + offset_coord(dir);
             map[new_box.y][new_box.x] = box.second;
         }
         move_r(map, r, dir);
-        //print(map);
+        // print(map);
     }
 }
 
-long Day15::solvePart1() {
+ResultType Day15::solvePart1() {
     const auto content = split(input_data, '\n');
     auto [map, movements] = split_input(content);
 
@@ -208,13 +210,13 @@ long Day15::solvePart1() {
     return result;
 }
 
-long Day15::solvePart2() {
+ResultType Day15::solvePart2() {
     const auto content = split(input_data, '\n');
     auto [map, movements] = split_input(content);
     map = scale(map);
 
     do_solve(map, movements);
-    print(map);
+    //print(map);
     long result = 0;
     for (auto y = 0; y < map.size(); ++y)
         for (auto x = 0; x < map[y].size(); ++x)

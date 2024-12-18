@@ -61,24 +61,22 @@ std::pair<std::vector<std::string>, std::vector<std::string>> split_input(auto d
     for (auto l : data) {
         if (l[2] == '|') {
             rules.push_back(l);
-        }
-        else
+        } else
             pages.push_back(l);
     }
     return std::make_pair(pages, rules);
 }
 
-
-long Day5::solvePart1() {
-	const auto content    =split(input_data, '\n');
-    auto const [data, rules] =split_input(content);
+ResultType Day5::solvePart1() {
+    const auto content = split(input_data, '\n');
+    auto const [data, rules] = split_input(content);
     auto cont_int = convert<int>(split(data, ','));
     const auto rules_int = convert<int>(split(rules, '|'));
 
     const Comp comp(rules_int);
     int result_p1 = 0;
-    for (auto &report: cont_int) {
-        if(std::ranges::is_sorted(report, comp)){
+    for (auto& report : cont_int) {
+        if (std::ranges::is_sorted(report, comp)) {
             result_p1 += report[report.size() / 2];
         }
     }
@@ -86,7 +84,7 @@ long Day5::solvePart1() {
     return result_p1;
 }
 
-long Day5::solvePart2() {
+ResultType Day5::solvePart2() {
 
 	const auto content    =split(input_data, '\n');
     auto const [data, rules] =split_input(content);
