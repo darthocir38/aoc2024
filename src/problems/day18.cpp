@@ -178,8 +178,8 @@ ResultType Day18::solvePart2() {
         if (cnt < nano_sec) {continue;}
 
         if (contains(last_path, {vec[1], vec[0]})) { continue;}
-        const auto path = find_path(maze, start, end);
-        if (path.empty()) {
+        last_path = find_path(maze, start, end);
+        if (last_path.empty()) {
             std::println("Output: {}", l);
             return l;
         }
