@@ -135,9 +135,7 @@ std::pair<Point, Point> build_maze(auto const& data) {
 auto prepare(auto const& input_data) {
     const auto maze = split(input_data, '\n');
     auto [start, end] = build_maze(maze);
-    const auto path = find_path(maze, start, end);
-
-    return path;
+    return find_path(maze, start, end);
 }
 
 
@@ -150,9 +148,6 @@ auto get_shortcuts(auto const& path, auto cheat_time) {
 
             auto const distance = a.distance(b);
             if (distance > cheat_time) {
-                continue;
-            }
-            if (not contains(path, b)) {
                 continue;
             }
             auto save = j - i - distance;
