@@ -131,95 +131,48 @@ std::pair<Point, Point> build_maze(auto const& data) {
     return { start, end };
 }
 
-ResultType Day20::solvePart1() {
+
+auto prepare(auto const& input_data) {
     const auto maze = split(input_data, '\n');
     auto [start, end] = build_maze(maze);
     const auto path = find_path(maze, start, end);
 
-    auto is_shortcut = [&path](auto const& a, auto const& b) {
-        auto const diff = a - b;
-        if (diff.x == 0 and abs(diff.y) == 2) {
-            // y shortcut
-            if (not contains(path, Point(a.x, a.y - (diff.y / 2)))) {
-                return true;
-            }
-        } else if (diff.y == 0 and abs(diff.x) == 2) {
-            // x shortcurt
-            if (not contains(path, Point(a.x - (diff.x / 2), a.y))) {
-                return true;
-            }
-        }
-
-        return false;
-    };
-
-    std::map<int, int> shots;
-    for (auto i = 0; i < path.size() - 1; ++i) {
-        for (auto j = i + 1; j < path.size(); ++j) {
-            auto const& a = path[i];
-            auto const& b = path[j];
-
-            if (is_shortcut(a, b)) {
-                auto save = j - i - 2;
-                // std::println("found shortcut: {},{} -> {},{} : {}", a.x, a.y, b.x, b.y, save);
-                if (shots.contains(save))
-                    shots[save] += 1;
-                else
-                    shots[save] = 1;
-            }
-        }
-    }
-
-    auto bla = 0;
-    for (auto [k, v] : shots) {
-        // std::println("{} -> {}", k, v);
-        if (k >= 100)
-            bla += v;
-    }
-    return bla;
+    return path;
 }
 
-ResultType Day20::solvePart2() {
-    const auto maze = split(input_data, '\n');
-    auto [start, end] = build_maze(maze);
-    const auto path = find_path(maze, start, end);
 
-    std::map<int, int> shots;
-    std::vector<std::pair<Point, Point>> existings;
-
+auto get_shortcuts(auto const& path, auto cheat_time) {
+    auto shortcuts = 0;
     for (auto i = 0; i < path.size() - 1; ++i) {
         for (auto j = i + 1; j < path.size(); ++j) {
             auto const& a = path[i];
             auto const& b = path[j];
 
             auto const distance = a.distance(b);
-            if (distance > 20) {
+            if (distance > cheat_time) {
                 continue;
             }
             if (not contains(path, b)) {
                 continue;
             }
             auto save = j - i - distance;
-            std::println("found shortcut: {},{} -> {},{} : {}", a.x, a.y, b.x, b.y, save);
-            if (save == 0) {continue;}
-            //if (contains(existings, {a,b})) {
-            //    continue;
-            //}
-            //existings.push_back({a, b});
-            if (shots.contains(save))
-                shots[save] += 1;
-            else
-                shots[save] = 1;
+            //std::println("found shortcut: {},{} -> {},{} : {}", a.x, a.y, b.x, b.y, save);
+            if (save < 100) {continue;}
+            shortcuts++;
         }
     }
+    return shortcuts;
+}
 
-    auto bla = 0;
-    for (auto [k, v] : shots) {
-        std::println("{} -> {}", k, v);
-        if (k >= 100)
-            bla += v;
-    }
-    return bla;
+ResultType Day20::solvePart1() {
+
+    auto const& path = prepare(input_data);
+    return get_shortcuts(path, 2);
+}
+
+ResultType Day20::solvePart2() {
+    auto const& path = prepare(input_data);
+    return get_shortcuts(path, 20);
 }
 
 } // namespace adventofcode
