@@ -40,6 +40,7 @@ public:
             input_data = *test_data2;
         }
     }
+    void set_data(std::string const& data) { input_data = data; }
 
     [[nodiscard]] ResultType get_test_result(Part part) const { return test_results[static_cast<size_t>(part)]; }
 
