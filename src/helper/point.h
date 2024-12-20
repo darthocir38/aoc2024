@@ -35,4 +35,9 @@ struct Point
 	{
 		return (0 <= x and x <= x_max) and (0 <= y and y <= y_max);
 	}
+
+	int distance(Point const& other) const {
+		return abs(x - other.x) + abs(y - other.y);
+	}
+
 };

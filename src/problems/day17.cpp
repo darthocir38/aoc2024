@@ -45,7 +45,7 @@ struct CPU
                 continue;
             }
             if (v[0] == "Program") {
-                program = convert<uint>(split(v[1].substr(1), ','));
+                program = convert<uint>(split(v[1], ','));
             }
         }
     }
