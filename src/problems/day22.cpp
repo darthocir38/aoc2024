@@ -22,7 +22,7 @@ Day22::Day22()
 	test_results = { 37327623, 0 };
 }
 
-uint64_t next_number(uint64_t number)
+constexpr uint64_t next_number(uint64_t const number)
 {
 	auto blub1 = ((number * 64) ^ number) % 16777216;
 	auto blub2 = ((blub1 / 32) ^ blub1) % 16777216;
@@ -31,7 +31,7 @@ uint64_t next_number(uint64_t number)
 	return blub3;
 }
 
-std::vector<uint64_t> gen_sequence(
+constexpr std::vector<uint64_t> gen_sequence(
     uint64_t                                 buyer,
     std::function<uint64_t(uint64_t)> const& f = [](uint64_t const number) {
 	    return number;
@@ -62,35 +62,12 @@ ResultType Day22::solvePart1()
 	return result;
 }
 
-std::tuple<int, int, int, int>
-    diff_seq(auto const& vec, int i, std::tuple<int, int, int, int> const& t)
+constexpr inline std::tuple<int, int, int, int>
+    diff_seq(std::tuple<int, int, int, int, int> const& t)
 {
-	auto [t0, t1, t2, t3] = t;
-	std::tuple seq        = { t0 - vec[i - 1], t1 - t0, t2 - t1, t3 - t2 };
+	auto [t0, t1, t2, t3, t4] = t;
+	std::tuple seq            = { t1 - t0, t2 - t1, t3 - t2, t4 - t3 };
 	return seq;
-}
-
-int bananas_of_sequence(auto const& data, auto const& seq_to_test)
-{
-	int result = 0;
-	for (auto const& buyer : data)
-	{
-		for (int j{}; std::tuple t : buyer | std::views::adjacent<4>)
-		{
-			if (j == 0)
-			{
-				j++;
-				continue;
-			}
-			if (diff_seq(buyer, j, t) == seq_to_test)
-			{
-				result += std::get<3>(t);
-				break;
-			}
-			j++;
-		}
-	}
-	return result;
 }
 
 ResultType Day22::solvePart2()
@@ -104,51 +81,43 @@ ResultType Day22::solvePart2()
 		sequences.push_back(gen_sequence(
 		    buyer, [](uint64_t const number) { return number % 10; }));
 	}
-	using sequence_t = std::tuple<int, int, int, int>;
-	int                            max_bananas = 0;
-	sequence_t max_sequence;
-	std::map<sequence_t,int> chache;
 
+	using sequence_t     = std::tuple<int, int, int, int>;
+	uint64_t max_bananas = 0;
 
-	for (auto i = 0; i < sequences.size(); i++)
+	std::map<sequence_t, uint64_t> global_cache;
+
+	for (auto i = 0uz; i < sequences.size(); i++)
 	{
-		int j = 0;
-		std::println("{}/{} {}/2000",i,sequences.size(),j);
-		for (std::tuple t : sequences[i] | std::views::adjacent<4>)
+		std::map<sequence_t, uint64_t> local_cache;
+		for (std::tuple t : sequences[i] | std::views::adjacent<5>)
 		{
-			if (j == 0)
-			{
-				j++;
-				continue;
-			}
-			auto test_seq = diff_seq(sequences[i], j, t);
-			if (chache.contains(test_seq)) continue;
-			/*if (test_seq == std::tuple{ -2, 1, -1, 3 })
-			{
-				std::println("Hello there {}", j);
-			}*/
+			auto test_seq = diff_seq(t);
 
-			auto banana = bananas_of_sequence(sequences, test_seq);
-			if (banana > max_bananas)
+			if (local_cache.contains(test_seq)) continue;
+
+			auto const banana     = std::get<4>(t);
+			local_cache[test_seq] = banana;
+
+			auto it = global_cache.find(test_seq);
+			if (it == global_cache.end())
 			{
-				max_bananas  = banana;
-				max_sequence = test_seq;
+				auto const [rit, _] =
+				    global_cache.insert(std::make_pair(test_seq, banana));
+				it = rit;
 			}
-			chache[test_seq] = banana;
-			j++;
+			else
+			{
+				it->second += banana;
+			}
+			if (auto const current = it->second; current > max_bananas)
+			{
+				max_bananas = current;
+			}
 		}
 	}
 
-	std::print(
-	    "Max bananas ={} {},{},{},{} ",
-	    max_bananas,
-	    std::get<0>(max_sequence),
-	    std::get<1>(max_sequence),
-	    std::get<2>(max_sequence),
-	    std::get<3>(max_sequence));
-
-	long result = 0;
-	return result;
+	return max_bananas;
 }
 
 } // namespace adventofcode

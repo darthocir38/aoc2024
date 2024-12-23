@@ -12,3 +12,5 @@ cmake-build-release
 inputs/*
 src/inputs.h
 src/cli/SolverFactory.h
+/cmake-build-release-wsl/
+/cmake-build-debug-wsl/
