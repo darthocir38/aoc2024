@@ -1,6 +1,6 @@
 #include "day3.h"
-#include "../helper/parser.h"
 #include <regex>
+#include <ranges>
 
 namespace adventofcode
 {
@@ -11,13 +11,14 @@ Day3::Day3() : DaySolver(3) {
 }
 
 ResultType Day3::solvePart1() {
-    const auto content = split(input_data, '\n');
     int sum = 0;
     static const std::regex p1("mul\\(([0-9]{1,3})"
                                ","
                                "([0-9]{1,3})\\)");
 
-    for (auto str : content) {
+	for (const auto word : std::views::split(input_data, '\n'))
+	{
+		std::string str{ word.data() };
         for (std::smatch sm; regex_search(str, sm, p1);) {
             sum += stoi(sm[1].str()) * stoi(sm[2].str());
             str = sm.suffix();
@@ -27,12 +28,13 @@ ResultType Day3::solvePart1() {
 }
 
 ResultType Day3::solvePart2() {
-	const auto content    =split(input_data, '\n');
 	static const std::regex p2(
 		"(do\\(\\)|don't\\(\\))|mul\\(([0-9]{1,3}),([0-9]{1,3})\\)");
     bool enabled = true;
     int sum = 0;
-    for (auto str : content) {
+	for (const auto word : std::views::split(input_data, '\n'))
+	{
+		std::string str{ word.data() };
 	    for (std::smatch sm; regex_search(str, sm, p2);)
 	    {
 	        if (auto const& sm0 = sm[0].str(); sm0.starts_with("do()"))

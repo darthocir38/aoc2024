@@ -19,7 +19,7 @@ Day22::Day22()
 10
 100
 2024)";
-	test_results = { 37327623, 0 };
+	test_results = { 37327623, 24 };
 }
 
 constexpr uint64_t next_number(uint64_t const number)

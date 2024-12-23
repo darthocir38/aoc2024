@@ -106,42 +106,9 @@ ResultType Day10::solvePart2() {
 
 }
 
-/*
 
 
 
 
 
 
-TEST_CASE("Day10")
-{
-	auto tcontent = read("../days/10/tinput");
-	auto content = read("../days/10/input");
-
-
-	std::println("{}", heights.size());
-
-	int result = 0;
-	int result_p2 = 0;
-	for (auto y = 0; y < heights.size(); y++)
-		for (auto x = 0; x < heights[y].size(); x++)
-		{
-			auto height = heights[y][x];
-			if (height == 0)
-			{
-				auto start = Point(x, y);
-				auto paths = find_paths(heights, start);
-				//std::println("start at {},{} -> {}", x,y, paths.size());
-				result += paths.size();
-				result_p2 += find_paths_p2(heights, start);
-			}
-		}
-
-
-
-	std::println("P1: {}", result);
-	std::println("P2: {}", result_p2);
-	/*REQUIRE(result == 6519155389266);
-	REQUIRE(antinodes_p2.size() == 949);
-}
-	 */

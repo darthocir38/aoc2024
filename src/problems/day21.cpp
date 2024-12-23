@@ -19,7 +19,7 @@ Day21::Day21()
 179A
 456A
 379A)";
-	test_results = { 126384, 0 };
+	test_results = { 126384, 154115708116294 };
 }
 
 std::map<char, std::vector<char>> num_conn = {
