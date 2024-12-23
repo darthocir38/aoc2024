@@ -6,6 +6,7 @@
 #define CONVERTER_H
 #include <algorithm>
 #include <ranges>
+#include <set>
 #include <vector>
 
 template <typename T> std::vector<std::vector<T>> by_column(std::vector<std::vector<T>> const& source) {
@@ -48,16 +49,31 @@ template <typename T> std::vector<std::vector<T>> split_by_char(std::vector<std:
     return data | std::ranges::views::transform([](auto const& x) { return split_by_char<T>(x); }) | std::ranges::to<std::vector>();
 }
 
-template <typename T> std::string to_str(std::vector<T> const& data, char delim = ',') {
-    std::string s;
-    for (auto i = 0; i < data.size(); i++) {
-        if (i == data.size() - 1) {
-            s += std::to_string(data[i]);
-            continue;
-        }
-        s += std::to_string(data[i]);
-        s+= delim;
-    }
-    return s;
+template <typename T>
+std::string to_str(std::vector<T> const& data, char delim = ',')
+{
+	std::string s;
+	for (auto i = 0; i < data.size(); i++)
+	{
+		if (i == data.size() - 1)
+		{
+			s += std::to_string(data[i]);
+			continue;
+		}
+		s += std::to_string(data[i]);
+		s += delim;
+	}
+	return s;
+}
+
+inline std::string set_join(std::set<std::string> data, char delim = ',')
+{
+	std::string s;
+	for (auto elem: data)
+	{
+		s += elem;
+		s += delim;
+	}
+	return s.substr(0, s.length() - 1);
 }
 #endif // CONVERTER_H
